@@ -6,14 +6,22 @@ import './cloud.dart';
 import './find.dart';
 import './Mydrawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-
+import '../utils/request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class IndexPage extends StatefulWidget {
   @override
   _IndexPageState createState() => _IndexPageState();
 }
 
 class _IndexPageState extends State<IndexPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    login();
+  }
+
   @override
   Widget build(BuildContext context) {
     // 屏幕适配
@@ -38,21 +46,36 @@ class _IndexPageState extends State<IndexPage> {
              child: Mydrawer(),
 
           ),
-          body: Column(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: TabBarView(
-                    children: tabs.map((Tabs tab){
-                      return TabsTitle(tabs: tab);
-                    }).toList()
-                ),
-              )
-            ],
+          body: TabBarView(
+              children: tabs.map((Tabs tab){
+                return TabsTitle(tabs: tab);
+              }).toList()
           )
       ),
     );
   }
+
+
+  Future login() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('token') == null) {
+      request('get', '/login/cellphone',
+          { 'phone': '15542988632', 'password': 'a123123'}).then((res) async {
+        var token = res['token'];
+        var profile = res['profile'];
+        var account = res['account'];
+
+        prefs.setString('token', token);
+        prefs.setString('profile', profile);
+        prefs.setString('account', account);
+
+        print('获取的token:' + token);
+      });
+    } else {
+      print('当前的token有效');
+    }
+  }
+
 }
 
 
