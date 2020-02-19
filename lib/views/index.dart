@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';  // ios风格  对苹果手机比较友
 import './home.dart';
 import './video.dart';
 import './cloud.dart';
+import './find.dart';
 import './Mydrawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -64,6 +65,7 @@ class Tabs {
 
 List<Tabs> tabs = [
   new Tabs(title: '我的', component: 'home'),
+  new Tabs(title: '发现', component: 'find'),
   new Tabs(title: '云村', component: 'cloud'),
   new Tabs(title: '视频', component: 'video')
 ];
@@ -78,6 +80,8 @@ class TabsTitle extends StatelessWidget {
     switch(tabs.component) {
       case 'home':
         return Home();
+      case 'find':
+        return Find();
       case 'cloud':
         return Cloud();
       case 'video':
