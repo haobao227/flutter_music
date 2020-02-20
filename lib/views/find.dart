@@ -10,6 +10,7 @@ import 'package:weui/weui.dart';
 import '../component/CommonContainer.dart';
 import '../component/ImageBlock.dart';
 
+
 class Find extends StatefulWidget {
   @override
   _FindState createState() => _FindState();
@@ -32,7 +33,8 @@ class _FindState extends State<Find> {
         children: <Widget>[
           HomeSwiper(),
           RecommendList(),
-          RecommendSongsList()
+          RecommendSongsList(),
+          ListenBestMusic()
         ],
       ),
     );
@@ -44,7 +46,6 @@ class HomeSwiper extends StatefulWidget {
   @override
   _HomeSwiperState createState() => _HomeSwiperState();
 }
-
 class _HomeSwiperState extends State<HomeSwiper>{
   var swiperDateList = [];
 
@@ -204,12 +205,10 @@ class RecommendList extends StatelessWidget {
 }
 
 //推荐歌单
-
 class RecommendSongsList extends StatefulWidget {
   @override
   _RecommendSongsListState createState() => _RecommendSongsListState();
 }
-
 class _RecommendSongsListState extends State<RecommendSongsList> {
   var result = [];
   final limit = 6;   // 一次只获取6条
@@ -252,14 +251,42 @@ class _RecommendSongsListState extends State<RecommendSongsList> {
 
   Future getRecommendSongsList() async {
     request('get', '/personalized', {'limit': limit}).then((res) {
-      print(res);
       setState(() {
         result = res['result'];
       });
 
+      print(res);
     });
   }
 
+}
+
+
+// 聆听华语佳曲
+class ListenBestMusic extends StatefulWidget {
+  @override
+  _ListenBestMusicState createState() => _ListenBestMusicState();
+}
+class _ListenBestMusicState extends State<ListenBestMusic> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: <Widget>[
+          CommonContainer(title: '风格推荐', anotherTitle: '聆听华语佳曲', buttonText: '播放全部', icon: null)
+
+        ],
+      ),
+    );
+  }
 }
 
 

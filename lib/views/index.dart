@@ -19,7 +19,7 @@ class _IndexPageState extends State<IndexPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    login();
+//    login();
   }
 
   @override
